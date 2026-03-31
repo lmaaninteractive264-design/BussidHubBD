@@ -9,13 +9,13 @@ async function loadPageData() {
         } 
         
         else if (document.getElementById("obbGrid")) {
-            const res = await fetch('../obbs.json');
+            const res = await fetch('obbs.json');
             const data = await res.json();
             renderLibrary(data, "obbGrid");
         } 
         
         else if (document.getElementById("modGrid")) {
-            const res = await fetch('../mod.json');
+            const res = await fetch('mod.json');
             const data = await res.json();
             renderLibrary(data, "modGrid");
         }
