@@ -28,48 +28,28 @@ async function loadPageData() {
 
 // ================== RENDER SKINS ==================
 function renderSkins(skins) {
-
     const grid = document.getElementById("skinGrid");
     if (!grid) return;
-
     grid.innerHTML = "";
 
     skins.forEach(skin => {
-
-        const path = `../assets/skins/${skin.model}/${skin.file}`;
-
+        // সরাসরি অনলাইন লিঙ্ক ব্যবহার হচ্ছে
+        const displayImg = skin.imageLink;
         let type = skin.link ? "official" : "local";
-
-        let button = "";
-
-        if (skin.link) {
-            button = `
-            <a href="${skin.link}" target="_blank">
-                <button>🌐 Download</button>
-            </a>`;
-        } else {
-            button = `
-            <a href="${path}" download="bussid_skin.png">
-                <button>📦 Download</button>
-            </a>`;
-        }
-
-        let badge = skin.link ? "🌐 Official" : "📦 Local";
+        
+        // ডাউনলোড বাটন লজিক
+        let finalDownloadUrl = skin.link ? skin.link : skin.downloadLink;
+        let btnIcon = skin.link ? "🌐" : "📦";
+        let btnText = skin.link ? "Download" : "Download";
 
         grid.innerHTML += `
-        <div class="card" 
-            data-name="${skin.name.toLowerCase()}" 
-            data-model="${skin.model}" 
-            data-type="${type}">
-
-            <img src="${path}" onclick="previewSkin('${path}')" alt="${skin.name}">
-
-            <p>${skin.name} ${badge}</p>
-
-            <small>By ${skin.creator || "Unknown"}</small>
-
-            ${button}
-
+        <div class="card" data-name="${skin.name.toLowerCase()}" data-model="${skin.model}" data-type="${type}">
+            <img src="${displayImg}" onclick="previewSkin('${displayImg}')" alt="${skin.name}" style="width:100%; border-radius:10px;">
+            <p style="margin:10px 0 5px;">${skin.name} ${btnIcon}</p>
+            <small style="color:#94a3b8; display:block; margin-bottom:10px;">By ${skin.creator || "Unknown"}</small>
+            <a href="${finalDownloadUrl}" target="_blank" style="text-decoration:none;">
+                <button style="width:100%; cursor:pointer;">${btnIcon} ${btnText}</button>
+            </a>
         </div>`;
     });
 
